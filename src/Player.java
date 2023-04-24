@@ -1,10 +1,10 @@
 import GLOOP.*;
-public class Box{
+public class Player {
     private GLQuader quader; 
-    private Spielfeld feld;
+    private Floor feld;
     private double vX,vZ;
     private double breite, tiefe;
 
-    public Box() {
+    public Player() {
     }
 }
