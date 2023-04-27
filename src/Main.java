@@ -1,6 +1,6 @@
 class Main{
-
     public static void main(String[] args){
-        Game kugelfangen = new Game();
+        Game catchingBalls = new Game();
+        catchingBalls.run();
     }
 }

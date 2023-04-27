@@ -8,24 +8,25 @@ Ideen:
 import GLOOP.*;
 public class Game {
     private GLKamera kamera;
-    private GLLicht licht;
-    private GLHimmel himmel;
-    private GLTastatur tastatur;
+    private GLLicht light;
+    private GLHimmel sky;
+    private GLTastatur key;
 
-    private Player dieBox;
+    private Player player;
     private Balls kugel1, kugel2, kugel3;
 
     public Game() {
-        kamera = new GLKamera();
-        kamera.setzePosition(0, 500, 800);
+        kamera = new GLEntwicklerkamera(1000,1000);
+        kamera.setzePosition(0, 0, 1);
+        kamera.verschiebe(0, 900, 0);
+        kamera.setzeBlickpunkt(0, 10, 0);
 
-        licht = new GLLicht();
-        himmel = new GLHimmel("src/img/Sterne.jpg");
-        tastatur = new GLTastatur();
+        light = new GLLicht();
+        sky = new GLHimmel("src/img/Sterne.jpg");
+        key = new GLTastatur();
 
+        player = new Player(100, 100);
         Floor spielfeld = new Floor(1000, 1000);
-
-        run();
     }
 
     public void run() {
