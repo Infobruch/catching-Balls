@@ -29,7 +29,7 @@ public class Game {
 
         spheres = new Balls[10];
         for (int i = 0; i < spheres.length; i++) {
-            spheres[i] = new Balls();
+            spheres[i] = new Balls(spheres, i, 10, player, spielfeld);
         }
     }
 
