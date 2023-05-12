@@ -10,12 +10,13 @@ public class Game {
     private GLLicht light;
     private GLHimmel sky;
     private GLTastatur key;
-
+    private Floor floor;
     private Player player;
     private Balls[] spheres;
+    int timer = 0;
 
     public Game() {
-        kamera = new GLEntwicklerkamera(1000,1000);
+        kamera = new GLEntwicklerkamera(1000, 1000);
         kamera.setzePosition(0, 0, 1);
         kamera.verschiebe(0, 1100, 0);
         kamera.setzeBlickpunkt(0, 10, 0);
@@ -25,16 +26,26 @@ public class Game {
         key = new GLTastatur();
 
         player = new Player(100, 100);
-        Floor spielfeld = new Floor(1000, 1000);
+        floor = new Floor(1000, 1000);
 
-        spheres = new Balls[10];
+        spheres = new Balls[50];
         for (int i = 0; i < spheres.length; i++) {
-            spheres[i] = new Balls(spheres, i, 10, player, spielfeld, 1, 1);
+            spheres[i] = new Balls(spheres, i, 10, player, floor, 1);
         }
     }
 
     public void run() {
-
+        while (!key.esc()) {
+            if (timer == 100) {
+                floor.resetBorders();
+                timer = 0;
+            }
+            for (int i = 0; i < spheres.length; i++) {
+                spheres[i].move();
+            }
+            Sys.warte(1);
+            timer++;
+        }
     }
 }
 

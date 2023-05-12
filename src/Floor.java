@@ -39,6 +39,12 @@ public class Floor {
             bottomBarrier.setzeSelbstleuchten(1,0,0);
         }
     }
+    public void resetBorders(){
+        leftBarrier.setzeSelbstleuchten(0,1,0);
+        topBarrier.setzeSelbstleuchten(0,1,0);
+        rightBarrier.setzeSelbstleuchten(0,1,0);
+        bottomBarrier.setzeSelbstleuchten(0,1,0);
+    }
     public GLVektor getPos(){
         return floor.gibPosition();
     }
