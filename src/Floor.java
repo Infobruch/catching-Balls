@@ -39,11 +39,25 @@ public class Floor {
             bottomBarrier.setzeSelbstleuchten(1,0,0);
         }
     }
-
-    public double getWidth(){
-        return width;
+    public GLVektor getPos(){
+        return floor.gibPosition();
+    }
+    public double getBackZ(){
+        return this.getPos().z - length/2;
+    }
+    public double getFrontZ(){
+        return this.getPos().z + length/2;
+    }
+    public double getLeftX(){
+        return this.getPos().x - width/2;
+    }
+    public double getRightX(){
+        return this.getPos().x + width/2;
     }
     public double getLength(){
         return length;
+    }
+    public double getWidth(){
+        return width;
     }
 }
