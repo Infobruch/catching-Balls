@@ -14,6 +14,7 @@ public class Game {
     private Player player;
     private Balls[] spheres;
     int timer = 0;
+    int ballsCount = 50;
 
     public Game() {
         kamera = new GLEntwicklerkamera(1000, 1000);
@@ -25,10 +26,10 @@ public class Game {
         sky = new GLHimmel("src/img/Sterne.jpg");
         key = new GLTastatur();
 
-        player = new Player(100, 100);
         floor = new Floor(1000, 1000);
-
-        spheres = new Balls[50];
+        player = new Player(0, 0, 30,1,floor);
+        floor.getRightX();
+        spheres = new Balls[ballsCount];
         for (int i = 0; i < spheres.length; i++) {
             spheres[i] = new Balls(spheres, i, 10, player, floor, 1);
         }
@@ -42,6 +43,16 @@ public class Game {
             }
             for (int i = 0; i < spheres.length; i++) {
                 spheres[i].move();
+            }
+            if (key.istGedrueckt('w')){
+                System.out.println("lool");
+                player.moveUp();
+            } else if (key.istGedrueckt('a')) {
+                player.moveLeft();
+            } else if (key.istGedrueckt('s')) {
+                player.moveDown();
+            } else if (key.istGedrueckt('d')) {
+                player.moveRight();
             }
             Sys.warte(1);
             timer++;

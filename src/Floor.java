@@ -2,8 +2,8 @@
 
 import GLOOP.*;
 public class Floor {
-    private GLQuader floor,leftBarrier,rightBarrier, topBarrier, bottomBarrier;
-    private double width, length;
+    GLQuader floor,leftBarrier,rightBarrier, topBarrier, bottomBarrier;
+    double width, length;
 
     public Floor(double pWidth, double pLength){
         width = pWidth;
