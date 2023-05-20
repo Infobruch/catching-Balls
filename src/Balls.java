@@ -22,7 +22,7 @@ public class Balls {
         speedX = Math.random()*speed*2-speed;
         speedZ = Math.random()*speed-speed/2;
         vPos = new GLVektor(Math.random()*(floor.getWidth() - 2*radius) - (floor.getWidth() - 2*radius)/2, 0 + radius, Math.random()*(floor.getLength() - 2*radius) - (floor.getLength()- 2*radius)/2);
-        outOfBounds = new GLVektor(100, 100, 0);
+        outOfBounds = new GLVektor(999999, 999999, 999999);
         s1 = new GLKugel(vPos, pRadius);
         pos = new GLVektor(this.getPos());
         s1.setzeFarbe(newColor().x,newColor().y, newColor().z);
