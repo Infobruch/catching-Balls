@@ -13,11 +13,12 @@ public class Game {
     private Floor floor;
     private Player player;
     private Balls[] spheres;
-    int timer = 0;
-    int ballsCount = 50;
+    private Button scoreButton;
+    int timer = 0, score = 0;
+    public int ballsCount = 50;
 
     public Game() {
-        kamera = new GLEntwicklerkamera(1000, 1000);
+        kamera = new GLKamera(1000, 1000);
         kamera.setzePosition(0, 0, 1);
         kamera.verschiebe(0, 1100, 0);
         kamera.setzeBlickpunkt(0, 10, 0);
@@ -26,12 +27,25 @@ public class Game {
         sky = new GLHimmel("src/img/Sterne.jpg");
         key = new GLTastatur();
 
+        scoreButton = new Button();
+        scoreButton.build(0, 0, 0, 50, 25, "Score: " + score, 40, true);
+        scoreButton.rotate(-90, 0, 0);
+        scoreButton.setPos(0, 0, -550);
+
         floor = new Floor(1000, 1000);
-        player = new Player(0, 0, 30,1,floor);
+        player = new Player(0, 0, 30, 1, floor);
         floor.getRightX();
         spheres = new Balls[ballsCount];
         for (int i = 0; i < spheres.length; i++) {
             spheres[i] = new Balls(spheres, i, 10, player, floor, 1);
+        }
+    }
+
+    public void updateScore() {
+        for (int i = 0; i < spheres.length; i++) {
+            score += spheres[i].getScore();
+            spheres[i].resetScore();
+            scoreButton.setText("Score: " + score, 40);
         }
     }
 
@@ -44,8 +58,7 @@ public class Game {
             for (int i = 0; i < spheres.length; i++) {
                 spheres[i].move();
             }
-            if (key.istGedrueckt('w')){
-                System.out.println("lool");
+            if (key.istGedrueckt('w')) {
                 player.moveUp();
             } else if (key.istGedrueckt('a')) {
                 player.moveLeft();
@@ -56,7 +69,14 @@ public class Game {
             }
             Sys.warte(1);
             timer++;
+            updateScore();
+            if (score == ballsCount) {
+                scoreButton.setPos(0, 0, 0);
+                scoreButton.setTextColor(255, 215, 0);
+                scoreButton.setText("You WON", 80);
+                Sys.warte(1000);
+                Sys.beenden();
+            }
         }
     }
 }
-

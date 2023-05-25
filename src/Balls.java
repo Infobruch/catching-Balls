@@ -11,7 +11,7 @@ public class Balls {
     private boolean caught = false;
     private double speedX, speedZ,tempSpeedX, tempSpeedZ;
     private GLVektor outOfBounds,vPos;
-    int collisions;
+    int collisions, score = 0;
 
     public Balls(Balls[] pBalls,int pIndex,double pRadius, Player pPlayer, Floor pFloor, double speed) {
         spheres = pBalls;
@@ -32,7 +32,6 @@ public class Balls {
                collisions++;
                this.resetRandomPos();
            }
-           System.out.println(collisions);
        }while(collisions > 0);
     }
     public GLVektor getPos(){
@@ -43,33 +42,32 @@ public class Balls {
     }
     public void move(){
         //System.out.println("test");
-        if (caught){
-            this.makeItGoAway();
-        }
-        if(this.getPos() != outOfBounds){
-            this.checkCollision();
-            if(this.getPos().x + radius >= floor.getRightX() || this.getPos().x - radius <= floor.getLeftX()){
-                speedX = -speedX;
-                s1.setzeSelbstleuchten(this.newColor().x, this.newColor().y, this.newColor().z);
-                if (this.getPos().x != outOfBounds.x && this.getPos().x + radius >= floor.getRightX()){
-                    floor.barrierCollision(3);
-                } else if (this.getPos().x != outOfBounds.x && this.getPos().x - radius <= floor.getLeftX()){
-                    floor.barrierCollision(1);
+        if (!caught) {
+            if (this.getPos() != outOfBounds) {
+                this.checkCollision();
+                if (this.getPos().x + radius >= floor.getRightX() || this.getPos().x - radius <= floor.getLeftX()) {
+                    speedX = -speedX;
+                    s1.setzeSelbstleuchten(this.newColor().x, this.newColor().y, this.newColor().z);
+                    if (this.getPos().x != outOfBounds.x && this.getPos().x + radius >= floor.getRightX()) {
+                        floor.barrierCollision(3);
+                    } else if (this.getPos().x != outOfBounds.x && this.getPos().x - radius <= floor.getLeftX()) {
+                        floor.barrierCollision(1);
+                    }
                 }
-            }
-            if(this.getPos().z + radius >= floor.getFrontZ() || this.getPos().z - radius <= floor.getBackZ()){
-                speedZ = -speedZ;
-                s1.setzeSelbstleuchten(this.newColor().z, this.newColor().y, this.newColor().z);
-                if (this.getPos().z != outOfBounds.z && this.getPos().z + radius >= floor.getFrontZ()){
-                    floor.barrierCollision(2);
-                } else if (this.getPos().z != outOfBounds.z && this.getPos().z - radius <= floor.getBackZ()){
-                    floor.barrierCollision(4);
+                if (this.getPos().z + radius >= floor.getFrontZ() || this.getPos().z - radius <= floor.getBackZ()) {
+                    speedZ = -speedZ;
+                    s1.setzeSelbstleuchten(this.newColor().z, this.newColor().y, this.newColor().z);
+                    if (this.getPos().z != outOfBounds.z && this.getPos().z + radius >= floor.getFrontZ()) {
+                        floor.barrierCollision(2);
+                    } else if (this.getPos().z != outOfBounds.z && this.getPos().z - radius <= floor.getBackZ()) {
+                        floor.barrierCollision(4);
+                    }
                 }
+                vPos.x += speedX;
+                vPos.z += speedZ;
+                s1.drehe(speedX, 0, speedZ);
+                this.updateSpherePos(vPos);
             }
-            vPos.x += speedX;
-            vPos.z += speedZ;
-            s1.drehe(speedX, 0, speedZ);
-            this.updateSpherePos(vPos);
         }
         this.gotCaught();
     }
@@ -123,6 +121,7 @@ public class Balls {
     public void gotCaught(){
         if(checkForCollisionWithHole()) {
             this.makeItGoAway();
+            score++;
         }
     }
     public void makeItGoAway(){
@@ -133,6 +132,12 @@ public class Balls {
 
     public void updateSpherePos(GLVektor pos){
         s1.setzePosition(pos);
+    }
+    public int getScore(){
+        return score;
+    }
+    public void resetScore(){
+        score = 0;
     }
     public double getSpeedX(){
         return speedX;
